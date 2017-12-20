@@ -3,11 +3,14 @@ import subprocess
 import serial
 
 try:
-    ports = subprocess.check_output(['python', '-m', 'serial.tools.list_ports']).split('\n')
-except:
+    ports_string = subprocess.check_output(['python', '-m', 'serial.tools.list_ports']).decode("utf-8")
+    print("FOUND: " + ports_string)
+    ports = ports_string.strip().split('\n')
+except Exception as e:
     ports = ["/dev/ttyUSB0", "/dev/ttyUSB1"]  # TODO: REMOVE ME: stub to debug without any ports
+    print("stubs used as no ports found, err:" + str(e))
 
-ard_ports = [i for i in range(16)]  # TODO: implement possibility to skip busy portrs
+ard_ports = [i for i in range(40)]  # TODO: implement possibility to skip busy portrs
 
 top = Tk()
 
@@ -27,24 +30,28 @@ ser = None
 
 def checkbox_changed(port, var):
     def f():
+        to_send = str(port)
         if var.get() == 1:
-            # ser.write(str(port) + "+\n") #TODO: uncomment me
+            to_send+="+"
             print("checked " + str(port))
         else:
-            # ser.write(str(port) + "-\n") #TODO: uncomment me
+            to_send +="-"
             print("unchecked " + str(port))
-            # ser.flush() #TODO: uncomment me
+        to_send+="\n"
+        ser.write(to_send.encode("utf-8"))
+        ser.flush()
 
     return f
 
 
 def connect():
+    global ser
     rows_count = int(rows_edit.get())
     cols_count = int(cols_edit.get())
     com_port = ports_list.get(ACTIVE)
     print("connect rows:" + str(rows_count) + " cols:" + str(cols_count) + " port:" + com_port)
-    # ser = serial.Serial(com_port) #TODO: uncomment me
-    # print("connected to :" + ser.name)
+    ser = serial.Serial(com_port)
+    print("connected to :" + ser.name)
 
     ind = 0
     start_row = 4  # TODO: fix placing
@@ -69,7 +76,7 @@ connect_button.grid(row=3)
 
 
 def on_closing():
-    # ser.close() #TODO: uncomment me
+    ser.close()
     top.destroy()
 
 
