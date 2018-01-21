@@ -2,8 +2,6 @@ import tkinter as tk
 import subprocess
 import serial
 
-MATRIX_TYPE = "Matrix"
-
 
 class Connection:
     def __init__(self, parent):
@@ -63,7 +61,7 @@ class Connection:
                     var = tk.IntVar(value=1)
                     chb = tk.Checkbutton(self.model_frame, text=str(port), variable=var,
                                          command=self.checkbox_changed(i, j, var))
-                    chb.grid(row=start_row + i, column=j+1)
+                    chb.grid(row=start_row + i, column=j + 1)
 
         return f
 
@@ -90,7 +88,7 @@ class Connection:
 def get_available_serials():
     ports_string = subprocess.check_output(['python', '-m', 'serial.tools.list_ports']).decode("utf-8").strip()
     print("FOUND: " + ports_string)
-    if len(ports_string) == 0: # TODO: REMOVE ME: stub to debug without any ports
+    if len(ports_string) == 0:  # TODO: REMOVE ME: stub to debug without any ports
         print("stubs used as no ports found")
         return ["/dev/ttyUSB0", "/dev/ttyUSB1"]
     return ports_string.split('\n')

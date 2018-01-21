@@ -1,13 +1,25 @@
-int incomingByte = 0;
+
+int start_pin = 2;
+int end_pin = 13;
+
+String input;
 
 void setup() {
-    Serial.begin(4800);     // opens serial port, sets data rate to 9600 bps
+    Serial.begin(9600);
+    for (int i = start_pin; i <= end_pin; i++){
+        pinMode(i, OUTPUT);
+        digitalWrite(i, LOW);
+    }
 }
 
 void loop() {
     if (Serial.available() > 0) {
-         incomingByte = Serial.read();
-         Serial.print("I received: ");
-         Serial.println(incomingByte, DEC);
+         input = Serial.readString();
+         pin = input.substring(1).toInt()
+         if (input[0]=='+') {
+            digitalWrite(pin + start_pin, HIGH);
+         }else{
+            digitalWrite(pin + start_pin, LOW);
+         }
     }
 }

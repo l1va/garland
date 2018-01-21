@@ -8,7 +8,10 @@ Requirement:
 
 to run call: python3 main.py
 
-The idea is pretty similiar to [this](http://bildr.org/2011/01/arduino-serial/), but with 
-LEDs placed in a square like [here](http://skpang.co.uk/catalog/images/arduino/seeed/IMG_2850.jpg).
+The idea is pretty similiar to [this](http://bildr.org/2011/01/arduino-serial/), but  
+LEDs can be placed in any figure and you can control state by Tkinter GUI (or implement your
+awesome example).
 
-As you see you can update code to use not only LEDs, but anything you want.
+For sure you can update code to use not only LEDs, but anything you want.
+
+[![Awesome garland example on arduino](https://github.com/l1va/garland/blob/master/video_link.jpg?raw=true)](https://youtu.be/GTirX8CdfMU)
